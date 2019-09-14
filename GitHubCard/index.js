@@ -3,6 +3,27 @@
            https://api.github.com/users/<your name>
 */
 
+let usersArray = [
+  'christinebussingerdev',
+  'TheeSweeney',
+  'radelmann',
+  'tetondan',
+  'pjhyett'
+]
+
+  
+grabUserData = user => {
+  axios.get(`https://api.github.com/users/${user}`)
+  .then(userdata => {
+    console.log('good')
+    userCardGenerator(userdata.data)
+  })
+}
+
+usersArray.forEach(user => {
+  grabUserData(user)
+})
+
 /* Step 2: Inspect and study the data coming back, this is YOUR 
    github info! You will need to understand the structure of this 
    data in order to use it to build your component function 
@@ -24,7 +45,17 @@
           user, and adding that card to the DOM.
 */
 
-const followersArray = [];
+const followersArray = [
+  'ivey',
+  'dustinmyers',
+  'justsml',
+  'luishrd',
+  'bigknell'
+];
+
+followersArray.forEach(user => {
+  grabUserData(user)
+})
 
 /* Step 3: Create a function that accepts a single object as its only argument,
           Using DOM methods and properties, create a component that will return the following DOM element:
@@ -45,7 +76,29 @@ const followersArray = [];
 </div>
 
 */
+const userCardGenerator = user => {
+  let entry = document.querySelector('.cards')
+  let newCard = document.createElement('div')
+  
+  newCard.innerHTML = `
+  <div class="card">
+  <img src=${user.avatar_url} />
+  <div class="card-info">
+    <h3 class="name">${user.name}</h3>
+    <p class="username">${user.login}</p>
+    <p>Location: ${user.location}</p>
+    <p>Profile:  
+      <a href=${user.html_url}>${user.html_url.toString()}</a>
+    </p>
+    <p>Followers: ${user.followers}</p>
+    <p>Following: ${user.following}</p>
+    <p>Bio: ${user.bio}</p>
+  </div>
+</div>`
 
+entry.appendChild(newCard)
+
+}
 /* List of LS Instructors Github username's: 
   tetondan
   dustinmyers
